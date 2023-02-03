@@ -143,7 +143,7 @@ class StatsCollector(object):
         self.packets_recv_ps.flush()
         self.connections_ps.flush()
 
-    def start(self, io_loop):
+    def start(self):
         # If started, will collect averages every second
-        self.periodic_callback = ioloop.PeriodicCallback(self._update_averages, 1000, io_loop)
+        self.periodic_callback = ioloop.PeriodicCallback(self._update_averages, 1000)
         self.periodic_callback.start()
