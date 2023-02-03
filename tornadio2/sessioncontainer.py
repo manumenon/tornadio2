@@ -73,13 +73,22 @@ class SessionBase(object):
         pass
 
     def __cmp__(self, other):
-        return cmp(self.expiry_date, other.expiry_date)
+        return (self.expiry_date > other.expiry_date) - (self.expiry_date < other.expiry_date)
 
     def __repr__(self):
         return '%f %s %d' % (getattr(self, 'expiry_date', -1),
                              self.session_id,
                              self.promoted or 0)
+    # defining comparators less_than and equals
+    def __lt__(self, other):
+        return self.expiry_date < other.expiry_date
 
+    def __eq__(self, other):
+        if(other == None):
+            return False
+        if(not isinstance(other, SessionBase)):
+            return False
+        return self.session_id == other.session_id
 
 class SessionContainer(object):
     def __init__(self):
