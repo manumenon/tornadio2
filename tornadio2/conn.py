@@ -118,7 +118,8 @@ class SocketConnection(object):
         self.ack_queue = dict()
 
         self._event_worker = None
-
+        self._events =dict()
+        
     # Public API
     def on_open(self, request):
         """Default on_open() handler.
