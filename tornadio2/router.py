@@ -158,7 +158,7 @@ class TornadioRouter(object):
         self.io_loop=self._sessions_cleanup.io_loop
         # Stats
         self.stats = stats.StatsCollector()
-        self.stats.start(self.io_loop)
+        self.stats.start()
 
         # Initialize URLs
         self._transport_urls = [
