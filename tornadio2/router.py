@@ -121,8 +121,7 @@ class TornadioRouter(object):
     def __init__(self,
                  connection,
                  user_settings=dict(),
-                 namespace='socket.io',
-                 io_loop=None):
+                 namespace='socket.io'):
         """Constructor.
 
         `connection`
@@ -142,8 +141,7 @@ class TornadioRouter(object):
         # Store connection class
         self._connection = connection
 
-        # Initialize io_loop
-        self.io_loop = io_loop or ioloop.IOLoop.instance()
+
 
         # Settings
         self.settings = DEFAULT_SETTINGS.copy()
@@ -155,10 +153,9 @@ class TornadioRouter(object):
 
         check_interval = self.settings['session_check_interval'] * 1000
         self._sessions_cleanup = ioloop.PeriodicCallback(self._sessions.expire,
-                                                         check_interval,
-                                                         self.io_loop)
+                                                         check_interval)
         self._sessions_cleanup.start()
-
+        self.io_loop=self._sessions_cleanup.io_loop
         # Stats
         self.stats = stats.StatsCollector()
         self.stats.start(self.io_loop)
